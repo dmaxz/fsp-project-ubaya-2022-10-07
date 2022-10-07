@@ -22,8 +22,8 @@ class Peserta
     {
         $kode = "%$kode%";
         $nrp = "%$nrp%";
-        $sql = 
-        "select 
+        $sql =
+            "select 
         pe.kode, mt.nama as 'nama_matakuliah', 
         pe.nrp, mh.nama as 'nama_mahasiswa', 
         pe.nilai 
@@ -37,18 +37,18 @@ class Peserta
         pe.nrp like ? 
         and pe.nilai $tandanilai ? ";
         $koneksi = new Koneksi();
-        
+
         $stmt = $koneksi->prepare($sql);
-        
+
         $stmt->bind_param("ssi", $kode, $nrp, $nilai);
-        
+
         $stmt->execute();
-        
+
         $result = $stmt->get_result();
-        
+
         $returnarr = array();
-        
-        while ($peserta = $result->fetch_assoc()){
+
+        while ($peserta = $result->fetch_assoc()) {
             // ChromePhp::log("KONTOL");
             array_push($returnarr, $peserta);
         }
@@ -56,6 +56,31 @@ class Peserta
         # code...
     }
 
-    
-
+    public static function insertupdatedeleteALLINONEWOOOOOOOOOOOOO($kode = "", $nrp = "", $nilai = 0)
+    {
+        $sql = "";
+        $koneksi = new Koneksi();
+        $stmt = null;
+        if ($nilai == 0 || $nilai == null || empty($nilai)) {
+            // ChromePhp::log("WOOOO MASUK KOSONG $kode - $nrp - $nilai");
+            $sql = "IF EXISTS (select * from peserta where kode=? and nrp=?) 
+            THEN
+                DELETE FROM peserta WHERE kode=? and nrp=?;
+            END IF";
+            $stmt = $koneksi->prepare($sql);
+            $stmt->bind_param("ssss", $kode, $nrp, $kode, $nrp);
+        }
+        else {
+            // ChromePhp::log("WOOOO TIDAK KOSONG $kode - $nrp - $nilai");
+            $sql = 
+            "REPLACE INTO peserta
+            (kode, nrp, nilai)
+            VALUES
+            (?, ?, ?);";
+            $stmt = $koneksi->prepare($sql);
+            $stmt->bind_param("ssi", $kode, $nrp, $nilai);
+        }
+        $stmt->execute();
+        # code...
+    }
 }
