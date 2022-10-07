@@ -66,7 +66,7 @@
                         if ($peserta['kode'] == $mk['kode'] && $peserta['nrp'] == $mh['nrp']) {
                             echo "<td><input type='number' id='quantity' name='{$peserta['kode']}-{$peserta['nrp']}' min='0' max='100' value='{$peserta['nilai']}'></td>";
                             $found = true;
-                            break;
+                            break 1;
                         }
                     }
                     if (!$found){
