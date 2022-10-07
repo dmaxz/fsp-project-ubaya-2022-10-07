@@ -3,7 +3,7 @@ include_once("ChromePhp.php");
 include_once("Mahasiswa.php");
 include_once("Matakuliah.php");
 include_once("Peserta.php");
-function load_index()
+function load_ubah_peserta_table($path)
 {
     $arrmk = Matakuliah::select("", "");
     $sizemk = sizeof($arrmk);
@@ -19,7 +19,7 @@ function load_index()
 
     $arrmh = Mahasiswa::select('', '');
     $sizemh = sizeof($arrmh);
-    echo "<form action='index.php' method='post'>";
+    echo "<form action='$path' method='post'>";
     foreach ($arrmh as $mh) {
         # code...
         echo "<tr>";

@@ -4,6 +4,7 @@ class Koneksi
 {
     private $conn;
     public function __construct($ip = "localhost", $username = "ken", $password = "ken", $database = "perkuliahan")
+    // ini dirubah saja kalo pengen pake ip, username, password, dan database yang kamu sudah set kalo memang beda
     {
         
         $this->conn = new mysqli($ip, $username, $password, $database);
